@@ -82,4 +82,15 @@ userRouter.get("/logout", (req, res) => {
     .send("logged out");
 });
 
+userRouter.get("/loggedIn", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.json(false);
+    jwt.verify(token, "jaiho");
+    res.send(true);
+  } catch (err) {
+    res.json(false);
+  }
+});
+
 module.exports = userRouter;

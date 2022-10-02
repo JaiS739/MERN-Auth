@@ -24,6 +24,7 @@ const Login = () => {
       };
 
       await axios.post("http://localhost:5100/user/login", login_user);
+      alert("logged in");
     } catch (err) {
       console.error(err);
     }
