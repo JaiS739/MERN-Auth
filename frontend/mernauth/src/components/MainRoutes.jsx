@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes } from "react-router";
+import AuthContext from "../context/AuthContext";
 import Customer from "../pages/Customer";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -7,14 +8,25 @@ import Register from "../pages/Register";
 import Navbar from "./Navbar";
 
 const MainRoutes = () => {
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/customer" element={<Customer />} />
+
+        {isLoggedIn === false && (
+          <>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </>
+        )}
+
+        {isLoggedIn === true && (
+          <>
+            <Route path="/customer" element={<Customer />} />
+          </>
+        )}
       </Routes>
     </>
   );

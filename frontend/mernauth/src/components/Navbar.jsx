@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Navbar = () => {
   const [value, setValue] = useState();
+
+  const { loggedIn } = useContext(AuthContext);
+
   return (
     <>
       <AppBar position="sticky">
@@ -19,9 +23,18 @@ const Navbar = () => {
               textColor="inherit"
             >
               <Tab LinkComponent={Link} to="/" label="Home" />
-              <Tab LinkComponent={Link} to="/customer" label="Customer" />
-              <Tab LinkComponent={Link} to="/login" label="Login" />
-              <Tab LinkComponent={Link} to="/register" label="Register" />
+              {loggedIn === false && (
+                <>
+                  <Tab LinkComponent={Link} to="/login" label="Login" />
+                  <Tab LinkComponent={Link} to="/register" label="Register" />
+                </>
+              )}
+
+              {loggedIn === true && (
+                <>
+                  <Tab LinkComponent={Link} to="/customer" label="Customer" />
+                </>
+              )}
             </Tabs>
           </Box>
         </Toolbar>
