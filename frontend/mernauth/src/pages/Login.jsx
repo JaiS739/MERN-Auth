@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import { useNavigate } from "react-router";
+import AuthContext from "../context/AuthContext";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
+
+  const { getLoggedIn } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => ({
@@ -23,8 +29,10 @@ const Login = () => {
         password: inputs.password,
       };
 
-      await axios.post("http://localhost:5100/user/login", login_user);
+      await axios.post("http://localhost:8080/user/login", login_user);
       alert("logged in");
+      getLoggedIn();
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -46,6 +54,7 @@ const Login = () => {
           alignItem="center"
         >
           <TextField
+            autoFocus
             name="email"
             varient="outline"
             type={"email"}

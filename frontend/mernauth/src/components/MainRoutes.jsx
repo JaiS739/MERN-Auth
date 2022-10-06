@@ -9,24 +9,22 @@ import Navbar from "./Navbar";
 
 const MainRoutes = () => {
   const { isLoggedIn } = useContext(AuthContext);
+  console.log(isLoggedIn);
+
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {isLoggedIn === false && (
-          <>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </>
-        )}
+        <>
+          <Route path="/customer" element={<Customer />} />
+        </>
 
-        {isLoggedIn === true && (
-          <>
-            <Route path="/customer" element={<Customer />} />
-          </>
-        )}
+        <>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </>
       </Routes>
     </>
   );

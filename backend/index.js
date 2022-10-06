@@ -8,8 +8,8 @@ const customerRouter = require("./routes/customerRouter");
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
-const port = 5100;
+app.use(cors({ credentials: true, origin: true }));
+const port = 8080;
 
 app.use("/user", userRouter);
 app.use("/customer", customerRouter);

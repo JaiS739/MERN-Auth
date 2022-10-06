@@ -1,6 +1,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
+import AuthContext from "../context/AuthContext";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -8,6 +10,10 @@ const Register = () => {
     password: "",
     verifyPassword: "",
   });
+
+  const { getLoggedIn } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => ({
@@ -26,8 +32,10 @@ const Register = () => {
         passwordverify: inputs.verifyPassword,
       };
 
-      await axios.post("http://localhost:5100/user/signup", new_user);
+      await axios.post("http://localhost:8080/user/signup", new_user);
       alert("signed up successfull");
+      getLoggedIn();
+      navigate("/login");
     } catch (err) {
       console.error(err);
     }
@@ -55,6 +63,7 @@ const Register = () => {
             margin={"normal"}
             placeholder="enter email"
             value={inputs.email}
+            autoFocus
             onChange={handleChange}
           />
 
